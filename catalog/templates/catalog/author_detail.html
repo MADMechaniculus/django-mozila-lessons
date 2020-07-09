@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+  <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+
+  <p><strong>Date of birth:</strong> {{ author.date_of_birth}}</p> <!-- author detail link not yet defined -->
+  <p><strong>Date of death:</strong> {{ author.date_of_death }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Books</h4>
+
+    {% if author.book_set.all %}
+    {% for copy in author.book_set.all %}
+    {% if copy.get_author_string == author.get_string %}
+    <hr class="bg-white">
+    <p class="text"><strong>{{copy.title}}</strong></p>
+    <p class="text">{{copy.summary}}</p>
+    <p class="text-muted">ISBN: {{copy.isbn}}</p>
+    {% else %}
+    <p class="text">Скан был, но нет результата</p>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <hr>
+    <p class="text">У этого автора пока нет книг</p>
+    {% endif %}
+  </div>
+  {% else %}
+  <p class="text-warning">You are not authenticated!</p>
+  {% endif %}
+{% endblock %}

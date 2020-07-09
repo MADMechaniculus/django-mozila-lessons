@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <h1>Book List</h1>
+
+    <div class="card bg-transparent border-white pt-3">
+    {% if book_list %}
+    <ul>
+
+      {% for book in book_list %}
+      <li style="list-style-type: circle">
+        <a class="text-decoration-none text-success" href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no books in the library.</p>
+    {% endif %}
+    {% else %}
+      <p class="text-warning">You are not authenticated!</p>
+    {% endif %}
+    </div>
+{% endblock %}

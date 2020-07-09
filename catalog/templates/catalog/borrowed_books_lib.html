@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Borrowed books by users</h1>
+    {% if user.is_staff %}
+    <div class="card bg-transparent border-white pt-3">
+    {% if bookinstance_list %}
+    <ul>
+      {% for bookinst in bookinstance_list %} 
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a class="text-success" href="{% url 'book-detail' bookinst.book.pk %}">{{ bookinst.book.title }}</a> ({{ bookinst.due_back }}) - borrower: 
+        {{ bookinst.borrower }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>There are no books borrowed.</p>
+    {% endif %}       
+    </div>
+    {% else %}
+    <p class="text-danger">Permission denied!</p>
+    {% endif %}
+{% endblock %}

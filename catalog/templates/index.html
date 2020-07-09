@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>My LIB</title>{% endblock %}
+
+{% block content %}
+<h1>Local Library Home</h1>
+
+  <p>Welcome to <em>LocalLibrary</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+
+  {% if user.is_authenticated %}
+
+<h2>Dynamic content</h2>
+
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Copies:</strong> {{ num_instances }}</li>
+    <li><strong>Copies available:</strong> {{ num_instances_avail }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+  </ul>
+
+<h2>Dynamic content</h2>
+  <div class="text-justify text-monospace">
+  <hr class="bg-white">
+  <p>Lorem ipsum pharetra maecenas tempus leo tellus et massa leo eros tempus vivamus molestie orci lectus at malesuada morbi: massa sem nulla, at nam
+  lorem. Commodo&nbsp;&mdash; curabitur: porta <b>vivamus cursus, ornare mattis orci</b> mauris at&nbsp;&mdash; non mattis morbi maecenas, eu&nbsp;&mdash; nibh vulputate diam auctor commodo. At vivamus sed, eget quisque proin vitae sodales quisque: donec: lorem, at eros gravida amet. Vulputate nibh cursus sem non diam lorem pellentesque elementum integer vitae. Diam leo bibendum maecenas in congue: et pellentesque donec eros, et mattis, non congue: nam sem orci auctor odio, quam gravida&nbsp;&mdash; et justo at nam.</p><p>Auctor at eu risus&nbsp;&mdash; elementum quam, mattis quisque orci ultricies, tempus eros commodo nibh. Morbi ipsum mattis ipsum justo metus leo morbi eu, sagittis duis congue mattis justo gravida sapien enim morbi metus maecenas ipsum&nbsp;&mdash; vivamus diam nam integer. Enim sagittis donec malesuada gravida nam pellentesque at lorem nibh ligula eros tempus eros sodales adipiscing lorem eros. Lectus urna morbi maecenas vulputate&nbsp;&mdash; molestie, porttitor nam, urna mauris quisque elementum proin sem.</p> 
+  <hr class="bg-white">
+  </div>
+  {% else %}
+  <h2 class="text-warning">Please, log in to system to see more info!</h2>
+  {% endif %}
+  <footer class="fixed-bottom bg-primary ">
+  <p class="p-3 mb-2">You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+  </footer>
+
+{% endblock %}
