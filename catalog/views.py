@@ -2,6 +2,13 @@ from django.shortcuts import render
 from .models import Book, BookInstance, Author, Genre, Language
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required
+
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import datetime
+from .forms import RenewBookForm
 
 # Create your views here.
 def index(request):
@@ -56,3 +63,24 @@ class BorrowedBooks(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
+
+# Forms implementation
+
+def renew_book_librarian(request, pk):
+    book_inst = get_object_or_404(BookInstance, pk = pk)
+
+    # If this request is POST
+    if request.method == 'POST':
+        form = RenewBookForm(request.POST)
+
+        if form.is_valid():
+            book_inst.due_back = form.cleaned_data['renewal_date']
+            book_inst.save()
+
+            return HttpResponseRedirect(reverse('lib-borrowed'))
+    # Or if this request is GET 
+    else:
+        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})
+
+    return render(request, 'catalog/book_renew_librarian.html', {'form':form, 'bookinst':book_inst})
