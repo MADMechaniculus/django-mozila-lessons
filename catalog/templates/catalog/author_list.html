@@ -3,13 +3,28 @@
 {% block content %}
     {% if user.is_authenticated %}
     <h1>Authors List</h1>
+    <a href="{% url 'author_create' %}" class="btn btn-primary btn-lg btn-block">Add author</a>
+    <div class="pt-3">
     <div class="card bg-transparent border-white pt-3">
     {% if author_list %}
     <ul>
-
       {% for author in author_list %}
-      <li style="list-style-type: circle">
-        <a class="text-decoration-none text-success" href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name}}</a> ({{author.date_of_birth}}{% if author.date_of_death %} - {{author.date_of_death}}{% endif %})
+      <li style="list-style-type: none" class="pb-2 pr-4">
+        <div class="row align-middle">
+        <div class="col">
+        <a class="text-decoration-none text-success" href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name}}</a> 
+        ({{author.date_of_birth}}{% if author.date_of_death %} - {{author.date_of_death}}{% endif %})
+        </div>
+        <div class="col-auto"> 
+          <div class="btn-group">
+          <a class="btn btn-danger" href="{{author.get_absolute_url}}/delete/">Delete</a>
+          <a class="btn btn-success" href="{{author.get_absolute_url}}/update/">Update</a>
+          </div>
+          </div>
+          </div>
+          {% if not forloop.last %}
+          <hr class="bg-white">
+          {% endif %}
       </li>
       {% endfor %}
 
@@ -20,5 +35,6 @@
     {% else %}
         <p class="text-warning">You are not authenticated!</p>
     {% endif %}
+    </div>
     </div>
 {% endblock %}

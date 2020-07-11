@@ -3,15 +3,29 @@
 {% block content %}
     {% if user.is_authenticated %}
     <h1>Book List</h1>
-
+    <a href="{% url 'book_create' %}" class="btn btn-primary btn-lg btn-block">Add book</a>
+    <div class="pt-3">
     <div class="card bg-transparent border-white pt-3">
     {% if book_list %}
     <ul>
 
       {% for book in book_list %}
-      <li style="list-style-type: circle">
+      <li style="list-style-type: none" class="pr-4">
+        <div class="row align-middle">
+        <div class="col">
         <a class="text-decoration-none text-success" href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
+        </div>
+        <div class="col-auto">
+          <div class="btn-group">
+            <a class="btn btn-danger" href="{{book.get_absolute_url}}/delete/">Delete</a>
+            <a class="btn btn-success" href="{{book.get_absolute_url}}/update/">Update</a>
+          </div>
+        </div>
+        </div>
       </li>
+      {% if not forloop.last %}
+        <hr class="bg-white">
+      {% endif %}
       {% endfor %}
 
     </ul>
@@ -21,5 +35,6 @@
     {% else %}
       <p class="text-warning">You are not authenticated!</p>
     {% endif %}
+    </div>
     </div>
 {% endblock %}

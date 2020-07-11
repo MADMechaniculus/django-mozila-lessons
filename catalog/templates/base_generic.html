@@ -46,7 +46,7 @@
     <form class="form-inline my-2 my-lg-0">
       {% if user.is_authenticated %}
       <li class="nav-item px-1" style="list-style-type: none">
-        <strong class="text-warning">User:</strong> {{ user.get_username }}
+        <strong class="text-warning {% if user.is_staff %}text-danger{% endif %}">User:{{ user.get_username }}</strong>
       </li>
       <a href="{% url 'logout'%}?next={{request.path}}" class="btn btn-outline-success my-2 my-sm-0 rounded-pill" type="button">Log out</a>
       {% else %}
@@ -95,6 +95,10 @@
 
   </div>
 </body>
+
+<div style="height: 48px">
+</div>
+
 <footer class="fixed-bottom bg-primary ">
   <div class="row pt-2">
     <div class="col">

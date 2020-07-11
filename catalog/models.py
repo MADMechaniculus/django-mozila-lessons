@@ -55,7 +55,13 @@ class Book(models.Model):
 
     def get_author_string(self):
         return '%s, %s' % (self.author.first_name, self.author.last_name)
-
+    
+    class Meta:
+        permissions = [
+            ('can_add_book', 'Can add book inot book table (USER_ADDED_PERMISSION)'),
+            ('can_edit_book', 'Can edit book parameters into book table (USER_ADDED_PERMISSION)'),
+            ('can_delete_book', 'Cam delete book from book table (USER_ADDED_PERMISSION)'),
+        ]
 
 class BookInstance(models.Model):
 
@@ -108,3 +114,10 @@ class Author(models.Model):
 
     def get_string(self):
         return '%s, %s' % (self.first_name, self.last_name)
+
+    class Meta:
+        permissions = [
+            ('can_add', "Can add new author in DB"),
+            ('can_delete', "Can delete author from DB"),
+            ('can_edit', "Can edit author data into DB"),
+        ]

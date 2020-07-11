@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {% if "/create/" in request.path %}
+        <h2>Create of book</h2>
+    {% else %}
+        <h2>Edit of book</h2>
+    {% endif %}
+    <hr class="bg-white">
+    <table>
+    {{ form.as_table }}
+    </table>
+    <hr class="bg-white">
+    <div class="row btn-group">
+        <div class="col-auto">
+            <input class="btn btn-success rounded-pill" type="submit" value="Submit" />
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-warning rounded-pill" href="{% url 'books' %}">Back</a>
+        </div>
+    </div>
+    
+</form>
+{% endblock %}
